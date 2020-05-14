@@ -1,0 +1,10 @@
+<h1>Update this Cocktail</h1>
+
+<h2><%= @cocktail.name.capitalize %></h2>
+
+<hr>
+<%= simple_form_for [@cocktail, @doses] do |f| %>
+  <%= f.asosiation :ingredient %>
+  <%= f.input :description %>
+  <%= f.submit class: "btn btn-primary" %>
+<% end %>
