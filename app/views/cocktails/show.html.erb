@@ -1,44 +1,52 @@
 
-<div class="container text-center display-flex justify-content-center">
-<h1><%= @cocktail.name.capitalize %></h1>
-  <div class="row">
-    <div class="col">
 
-    <h3>Description :</h3>
+<div style="background-image: linear-gradient(-225deg, rgba(0,101,168,1) 0%, rgba(0,36,61,0.4) 60%), url('<%= image_path 'cocktails.jpg' %>');">
+  <div class="container ">
+  <h1><%= @cocktail.name.capitalize %></h1>
+    <div class="row">
+      <div class="col-sm-12 col-md-6">
 
-    <ul class="list-inline">
-      <li> - INFOS :</li>
-      <% @cocktail.doses.each do |dose| %>
-        <li> - ingredient you need : <%= dose.ingredient.name %> / - Dose : <%= dose.description %></li>
+      <h3>Description :</h3>
+
+      <table class="table table-bordered">
+          <tbody>
+            <thead>
+              <th>Ingredient</th>
+              <th>Description</th>
+            </thead>
+            <% @cocktail.doses.each do |dose| %>
+              <tr>
+                <td><%= dose.ingredient.name %></td>
+                <td><%= dose.description %></td>
+                <td>
+                 <%= link_to dose_path(dose), method: :delete, data: { confirm: "Are you sure?" } do %>
+                    <i class="fa fa-trash destroy_dose"></i>
+                 <% end %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+
+    <h2>Add an ingredient :</h2>
+      <%= simple_form_for [@cocktail, @dose] do |f|%>
+        <%= f.association :ingredient, include_hidden: false %>
+        <%= f.input :description %>
+        <%= f.submit class: "btn btn-primary" %>
       <% end %>
-    </ul>
-
-    <%= simple_form_for [@cocktail, @dose] do |f|%>
-      <%= f.association :ingredient %>
-      <%= f.input :description %>
-      <%= f.submit class: "btn btn-primary" %>
-    <% end %>
 
 
 
-    <!-- <hr>
-    <%#= link_to 'Add ingredient',  %>
-    <hr>
-    <%#= link_to 'Add the dose of an ingredient',  %> -->
-    <hr>
-    <%= link_to 'Update this cocktail', edit_cocktail_path(@cocktail) %>
-    <hr>
-    <%= link_to 'Destroy this cocktail' , cocktail_path(@cocktail),
-    method: 'delete', data: { confirm: 'Are you sure?' }  %>
-    <hr>
-    <%= link_to 'Go back to your cocktail list', cocktails_path  %>
-    <hr>
+
+      <hr>
+      <td>
+        <%= link_to 'Destroy this cocktail' , cocktail_path(@cocktail), method: 'delete', data: { confirm: 'Are you sure?' } %>
+      </td>
+      <hr>
+      <%= link_to 'Go back to your cocktail list', root_path  %>
+      <hr>
+      </div>
     </div>
   </div>
 </div>
-
-
-
-
-
 

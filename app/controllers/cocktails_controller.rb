@@ -1,4 +1,3 @@
-
 class CocktailsController < ApplicationController
   def index
     @cocktails = Cocktail.all
@@ -15,25 +14,17 @@ class CocktailsController < ApplicationController
 
   def create
     @cocktail = Cocktail.new(cocktail_params)
-    @cocktail.save
-    redirect_to cocktail_path(@cocktail)
-  end
-
-  def edit
-    @cocktail = Cocktail.find(params[:id])
-    @doses = @cocktail.doses
-  end
-
-  def update
-    @cocktail = Cocktail.find(params[:id])
-    @cocktail.update(cocktail_params)
-    redirect_to cocktail_path(@cocktail)
+    if @cocktail.save
+      redirect_to cocktail_path(@cocktail)
+    else
+      render 'new'
+    end
   end
 
   def destroy
     @cocktail = Cocktail.find(params[:id])
     @cocktail.destroy
-    redirect_to cocktails_path
+    redirect_to root_path
   end
 
   private
@@ -47,3 +38,4 @@ class CocktailsController < ApplicationController
   #   @cocktails = JSON.parse(open(url).read)
   # end
 end
+
